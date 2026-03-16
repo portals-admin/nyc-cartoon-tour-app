@@ -1,0 +1,1931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NYC Cartoon Tour 🗽</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       CSS CUSTOM PROPERTIES & RESET
+    ============================================================ */
+    :root {
+      --sky-top: #5BA4CF;
+      --sky-bottom: #C9E8F5;
+      --water: #3AB5CC;
+      --building-dark: #1A252F;
+      --building-mid: #2C3E50;
+      --building-light: #34495E;
+      --nyc-yellow: #FFD700;
+      --nyc-red: #E53935;
+      --nyc-blue: #1565C0;
+      --nyc-blue-dark: #0D47A1;
+      --accent-green: #2E7D32;
+      --text-dark: #1A252F;
+      --text-mid: #444;
+      --shadow-sm: 0 4px 12px rgba(0,0,0,0.15);
+      --shadow-md: 0 8px 32px rgba(0,0,0,0.2);
+      --shadow-lg: 0 24px 80px rgba(0,0,0,0.4);
+      --radius: 16px;
+      --radius-lg: 24px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #EDF5FF;
+      color: var(--text-dark);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ============================================================
+       HEADER
+    ============================================================ */
+    .site-header {
+      background: var(--nyc-blue);
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-logo h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.1rem, 4vw, 1.55rem);
+      letter-spacing: 0.5px;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+      white-space: nowrap;
+    }
+
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+      min-width: 130px;
+    }
+
+    .progress-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      opacity: 0.9;
+      letter-spacing: 0.3px;
+    }
+
+    .progress-track {
+      width: 130px;
+      height: 11px;
+      background: rgba(255,255,255,0.18);
+      border-radius: 99px;
+      overflow: hidden;
+      border: 1.5px solid rgba(255,255,255,0.3);
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #FFD700, #FFA500);
+      border-radius: 99px;
+      transition: width 0.6s cubic-bezier(0.34,1.56,0.64,1);
+      width: 0%;
+    }
+
+    /* ============================================================
+       HERO SKYLINE
+    ============================================================ */
+    .hero {
+      position: relative;
+      height: clamp(220px, 35vw, 360px);
+      background: linear-gradient(180deg, #4A90C4 0%, #6BB3D6 45%, #A8D8EF 75%, #C9E8F5 100%);
+      overflow: hidden;
+    }
+
+    /* --- Sun --- */
+    .sun {
+      position: absolute;
+      right: clamp(40px, 8vw, 90px);
+      top: clamp(18px, 4vw, 36px);
+      width: clamp(50px, 8vw, 80px);
+      height: clamp(50px, 8vw, 80px);
+      background: radial-gradient(circle, #FFE566 30%, #FFD700 70%);
+      border-radius: 50%;
+      box-shadow: 0 0 0 12px rgba(255,215,0,0.12), 0 0 0 24px rgba(255,215,0,0.07);
+      animation: sun-pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes sun-pulse {
+      0%,100% { box-shadow: 0 0 0 12px rgba(255,215,0,0.12), 0 0 0 24px rgba(255,215,0,0.07); }
+      50%      { box-shadow: 0 0 0 18px rgba(255,215,0,0.18), 0 0 0 36px rgba(255,215,0,0.09); }
+    }
+
+    /* --- Clouds --- */
+    .cloud {
+      position: absolute;
+      background: white;
+      border-radius: 50px;
+      opacity: 0.9;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.06));
+    }
+    .cloud::before, .cloud::after {
+      content: '';
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+    }
+
+    .cloud-a { width: 100px; height: 28px; top: 28px; animation: cloud-drift 28s linear infinite; }
+    .cloud-a::before { width: 48px; height: 48px; top: -26px; left: 12px; }
+    .cloud-a::after  { width: 34px; height: 34px; top: -18px; left: 50px; }
+
+    .cloud-b { width: 140px; height: 34px; top: 65px; opacity: 0.75; animation: cloud-drift 38s linear infinite 10s; }
+    .cloud-b::before { width: 60px; height: 60px; top: -32px; left: 18px; }
+    .cloud-b::after  { width: 44px; height: 44px; top: -22px; left: 70px; }
+
+    .cloud-c { width: 76px; height: 22px; top: 16px; opacity: 0.82; animation: cloud-drift 22s linear infinite 18s; }
+    .cloud-c::before { width: 38px; height: 38px; top: -20px; left: 8px; }
+    .cloud-c::after  { width: 28px; height: 28px; top: -14px; left: 38px; }
+
+    @keyframes cloud-drift {
+      from { transform: translateX(-200px); }
+      to   { transform: translateX(calc(100vw + 200px)); }
+    }
+
+    /* --- Birds --- */
+    .birds-group {
+      position: absolute;
+      top: clamp(55px, 12vw, 90px);
+      left: 15%;
+      animation: birds-travel 22s linear infinite 4s;
+      display: flex;
+      gap: 10px;
+    }
+
+    .bird-shape {
+      width: 18px;
+      height: 7px;
+      position: relative;
+    }
+    .bird-shape::before, .bird-shape::after {
+      content: '';
+      position: absolute;
+      width: 9px;
+      height: 7px;
+      border-top: 2.5px solid #445;
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+      top: 0;
+    }
+    .bird-shape::before { left: 0; }
+    .bird-shape::after  { right: 0; transform: scaleX(-1); }
+
+    @keyframes birds-travel {
+      from { transform: translateX(0) translateY(0); }
+      30%  { transform: translateX(120px) translateY(-18px); }
+      60%  { transform: translateX(250px) translateY(-5px); }
+      to   { transform: translateX(calc(100vw + 100px)) translateY(-10px); }
+    }
+
+    /* --- Hero text --- */
+    .hero-content {
+      position: absolute;
+      top: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 15;
+      width: 92%;
+      pointer-events: none;
+    }
+
+    .hero-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.8rem, 7vw, 3.8rem);
+      color: white;
+      text-shadow: 3px 3px 0 var(--nyc-blue-dark), -1px -1px 0 rgba(255,255,255,0.2);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--nyc-red);
+      color: white;
+      padding: 5px 18px;
+      border-radius: 99px;
+      font-size: clamp(0.75rem, 2.5vw, 1rem);
+      font-weight: 800;
+      box-shadow: 0 3px 0 #B71C1C;
+      letter-spacing: 0.3px;
+    }
+
+    /* --- Skyline buildings --- */
+    .skyline {
+      position: absolute;
+      bottom: 22px;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      height: 200px;
+    }
+
+    .bldg {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .bldg-windows {
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(transparent, transparent 7px, rgba(255,240,100,0.22) 7px, rgba(255,240,100,0.22) 11px),
+        repeating-linear-gradient(90deg, transparent, transparent 7px, rgba(255,240,100,0.22) 7px, rgba(255,240,100,0.22) 11px);
+    }
+
+    .bldg-top {
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* --- Water at bottom of hero --- */
+    .hero-water {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 24px;
+      background: var(--water);
+      overflow: hidden;
+    }
+
+    .hero-water::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent 0px, transparent 25px,
+        rgba(255,255,255,0.18) 25px, rgba(255,255,255,0.18) 50px
+      );
+      animation: water-shimmer 6s linear infinite;
+    }
+
+    @keyframes water-shimmer {
+      from { transform: translateX(0); }
+      to   { transform: translateX(50px); }
+    }
+
+    /* --- Taxi --- */
+    .taxi-wrap {
+      position: absolute;
+      bottom: 23px;
+      left: -110px;
+      animation: taxi-drive 20s linear infinite 3s;
+    }
+
+    .taxi-body {
+      position: relative;
+      width: 80px;
+      height: 24px;
+      background: #FFD700;
+      border-radius: 6px 6px 3px 3px;
+      border: 2px solid #333;
+    }
+
+    .taxi-roof {
+      position: absolute;
+      top: -17px;
+      left: 16px;
+      width: 46px;
+      height: 19px;
+      background: #FFD700;
+      border-radius: 7px 7px 0 0;
+      border: 2px solid #333;
+      border-bottom: none;
+    }
+
+    .taxi-stripe {
+      position: absolute;
+      inset: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 7px;
+      background: repeating-linear-gradient(90deg, #333 0 5px, transparent 5px 11px);
+    }
+
+    .taxi-wheels {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 6px;
+    }
+
+    .wheel {
+      width: 15px;
+      height: 15px;
+      background: #222;
+      border-radius: 50%;
+      border: 3px solid #888;
+      margin-top: -3px;
+    }
+
+    @keyframes taxi-drive {
+      from { transform: translateX(0); }
+      to   { transform: translateX(calc(100vw + 120px)); }
+    }
+
+    /* ============================================================
+       MAIN TOUR SECTION
+    ============================================================ */
+    .tour-section {
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 28px 16px 16px;
+    }
+
+    .section-heading {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.5rem, 5vw, 2rem);
+      color: var(--nyc-blue);
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .section-sub {
+      text-align: center;
+      color: #777;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    /* --- Tour Controls --- */
+    .tour-controls {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+      align-items: center;
+    }
+
+    .btn {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 0.9rem;
+      padding: 9px 20px;
+      border: 3px solid transparent;
+      border-radius: 99px;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn:active { transform: scale(0.94) !important; }
+
+    .btn-primary {
+      background: var(--nyc-red);
+      color: white;
+      border-color: #C62828;
+      box-shadow: 0 4px 0 #B71C1C;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #B71C1C; }
+
+    .btn-outline {
+      background: white;
+      color: var(--nyc-blue);
+      border-color: var(--nyc-blue);
+      box-shadow: 0 4px 0 var(--nyc-blue-dark);
+    }
+    .btn-outline:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--nyc-blue-dark); }
+
+    .btn-green {
+      background: var(--accent-green);
+      color: white;
+      border-color: #1B5E20;
+      box-shadow: 0 4px 0 #1B5E20;
+    }
+    .btn-green:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #1B5E20; }
+
+    .tour-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--nyc-red);
+      color: white;
+      border-radius: 99px;
+      padding: 5px 13px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      opacity: 0;
+      transform: scale(0.85);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+    }
+    .tour-badge.active { opacity: 1; transform: scale(1); animation: badge-pulse 2s infinite; }
+
+    @keyframes badge-pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(229,57,53,0.5); }
+      50%      { box-shadow: 0 0 0 8px rgba(229,57,53,0); }
+    }
+
+    /* ============================================================
+       INTERACTIVE MAP
+    ============================================================ */
+    .map-wrapper {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 4px solid var(--nyc-blue);
+      box-shadow: var(--shadow-md);
+      margin-bottom: 28px;
+    }
+
+    .map-canvas {
+      position: relative;
+      width: 100%;
+      padding-bottom: 65%; /* 800:520 ratio */
+      background: #3AB5CC;
+      overflow: hidden;
+      cursor: crosshair;
+    }
+
+    .map-svg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: block;
+    }
+
+    /* --- Landmark Pins --- */
+    .landmark-pin {
+      position: absolute;
+      transform: translate(-50%, -100%);
+      cursor: pointer;
+      z-index: 20;
+      outline: none;
+    }
+
+    .pin-icon {
+      width: clamp(36px, 5.5vw, 48px);
+      height: clamp(36px, 5.5vw, 48px);
+      border-radius: 50% 50% 50% 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      transform: rotate(-45deg);
+      border: 3px solid white;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+      animation: pin-float 2.4s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    .pin-inner { transform: rotate(45deg); line-height: 1; }
+
+    .landmark-pin:hover .pin-icon,
+    .landmark-pin:focus .pin-icon {
+      transform: rotate(-45deg) scale(1.35) translateY(-4px);
+    }
+
+    .landmark-pin.visited .pin-icon {
+      box-shadow: 0 4px 14px rgba(0,0,0,0.35), 0 0 0 3px rgba(255,215,0,0.6);
+    }
+
+    /* staggered float delay */
+    .landmark-pin:nth-child(1) .pin-icon  { animation-delay: 0s; }
+    .landmark-pin:nth-child(2) .pin-icon  { animation-delay: 0.3s; }
+    .landmark-pin:nth-child(3) .pin-icon  { animation-delay: 0.6s; }
+    .landmark-pin:nth-child(4) .pin-icon  { animation-delay: 0.9s; }
+    .landmark-pin:nth-child(5) .pin-icon  { animation-delay: 1.2s; }
+    .landmark-pin:nth-child(6) .pin-icon  { animation-delay: 1.5s; }
+    .landmark-pin:nth-child(7) .pin-icon  { animation-delay: 1.8s; }
+    .landmark-pin:nth-child(8) .pin-icon  { animation-delay: 2.1s; }
+
+    @keyframes pin-float {
+      0%,100% { transform: rotate(-45deg) translateY(0); }
+      50%      { transform: rotate(-45deg) translateY(-5px); }
+    }
+
+    .pin-tooltip {
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%) scale(0.85);
+      background: white;
+      border: 2px solid rgba(0,0,0,0.15);
+      border-radius: 9px;
+      padding: 3px 9px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      color: var(--text-dark);
+    }
+
+    .landmark-pin:hover .pin-tooltip,
+    .landmark-pin:focus .pin-tooltip {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+    }
+
+    .pin-check {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      width: 18px;
+      height: 18px;
+      background: #FFD700;
+      border-radius: 50%;
+      border: 2px solid white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 900;
+      color: #333;
+      opacity: 0;
+      transform: scale(0) rotate(-45deg);
+      transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    .landmark-pin.visited .pin-check {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+
+    /* --- Map legend --- */
+    .map-legend {
+      background: rgba(255,255,255,0.97);
+      border-top: 3px solid var(--nyc-blue);
+      padding: 10px 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 14px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid rgba(0,0,0,0.15);
+      flex-shrink: 0;
+    }
+
+    .legend-item.visited-item .legend-dot {
+      outline: 2px solid #FFD700;
+      outline-offset: 1px;
+    }
+
+    /* ============================================================
+       LANDMARK CARDS GRID
+    ============================================================ */
+    .grid-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.4rem;
+      color: var(--nyc-blue);
+      margin-bottom: 14px;
+    }
+
+    .landmarks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .landmark-card {
+      background: white;
+      border: 3px solid #E0E8F0;
+      border-radius: var(--radius);
+      padding: 16px 10px 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .landmark-card:hover {
+      border-color: var(--nyc-blue);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .landmark-card:active {
+      transform: scale(0.96);
+    }
+
+    .landmark-card.visited {
+      border-color: #FFD700;
+      background: linear-gradient(135deg, #FFFDE7 0%, #FFF8E1 100%);
+    }
+
+    .card-emoji { font-size: 2.1rem; display: block; margin-bottom: 7px; }
+
+    .card-name {
+      font-weight: 800;
+      font-size: 0.82rem;
+      line-height: 1.25;
+      color: var(--text-dark);
+    }
+
+    .card-borough {
+      font-size: 0.68rem;
+      color: #999;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    .card-stamp {
+      position: absolute;
+      top: -9px;
+      right: -9px;
+      background: #FFD700;
+      border: 2.5px solid white;
+      border-radius: 99px;
+      padding: 2px 7px;
+      font-size: 0.6rem;
+      font-weight: 900;
+      color: #333;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      opacity: 0;
+      transform: scale(0) rotate(-10deg);
+      transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    .landmark-card.visited .card-stamp {
+      opacity: 1;
+      transform: scale(1) rotate(-8deg);
+    }
+
+    /* ============================================================
+       MODAL
+    ============================================================ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,20,40,0.72);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: white;
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 480px;
+      max-height: 92vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      transform: scale(0.78) translateY(40px);
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      position: relative;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .modal-overlay.open .modal {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-header {
+      padding: 22px 22px 18px;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .modal-header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent, transparent 12px,
+        rgba(255,255,255,0.07) 12px, rgba(255,255,255,0.07) 24px
+      );
+      pointer-events: none;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 2;
+      width: 34px;
+      height: 34px;
+      background: rgba(255,255,255,0.22);
+      border: 2px solid rgba(255,255,255,0.45);
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: background 0.2s ease, transform 0.2s ease;
+      line-height: 1;
+    }
+    .modal-close-btn:hover { background: rgba(255,255,255,0.42); transform: scale(1.12); }
+
+    .modal-visited-stamp {
+      position: absolute;
+      top: 16px;
+      right: 56px;
+      z-index: 2;
+      width: 58px;
+      height: 58px;
+      border: 3.5px solid rgba(255,255,255,0.75);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.52rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: rgba(255,255,255,0.75);
+      transform: rotate(-22deg);
+      opacity: 0;
+      transition: opacity 0.4s ease 0.3s;
+    }
+    .modal-visited-stamp.show { opacity: 1; }
+
+    .modal-header-emoji {
+      font-size: clamp(2.5rem, 8vw, 3.8rem);
+      display: block;
+      margin-bottom: 6px;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.25));
+      line-height: 1;
+    }
+
+    .modal-name {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.4rem, 5vw, 1.9rem);
+      color: white;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .modal-loc-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.22);
+      border: 1.5px solid rgba(255,255,255,0.4);
+      color: white;
+      border-radius: 99px;
+      padding: 3px 11px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    /* Modal body */
+    .modal-body { padding: 18px 20px 20px; }
+
+    .mascot-callout {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: #EEF6FF;
+      border: 2px solid #90CAF9;
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 15px;
+    }
+
+    .mascot-face {
+      font-size: 1.8rem;
+      flex-shrink: 0;
+      animation: pigeon-nod 3s ease-in-out infinite;
+    }
+
+    @keyframes pigeon-nod {
+      0%,100% { transform: rotate(-5deg); }
+      50%      { transform: rotate(5deg); }
+    }
+
+    .mascot-quote {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #1565C0;
+      line-height: 1.45;
+      font-style: italic;
+    }
+
+    .modal-desc {
+      font-size: 0.92rem;
+      line-height: 1.65;
+      color: var(--text-mid);
+      margin-bottom: 14px;
+    }
+
+    .fun-fact-box {
+      background: linear-gradient(135deg, #FFFDE7, #FFF8E1);
+      border: 2.5px solid #FFD700;
+      border-radius: 13px;
+      padding: 12px 14px;
+      margin-bottom: 15px;
+    }
+
+    .fun-fact-head {
+      font-size: 0.68rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #F57F17;
+      margin-bottom: 5px;
+    }
+
+    .fun-fact-text {
+      font-size: 0.87rem;
+      font-weight: 700;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    .modal-stats {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .stat-pill {
+      flex: 1;
+      background: #F4F6FA;
+      border-radius: 12px;
+      padding: 10px 8px;
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 0.62rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #AAA;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .stat-value {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-dark);
+    }
+
+    .modal-footer-btns {
+      display: flex;
+      gap: 9px;
+    }
+
+    .modal-footer-btns .btn { flex: 1; justify-content: center; font-size: 0.87rem; }
+
+    /* ============================================================
+       FLOATING MASCOT (Petey the Pigeon)
+    ============================================================ */
+    .petey-wrap {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      z-index: 300;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .petey-bubble {
+      background: white;
+      border: 3px solid var(--nyc-blue);
+      border-radius: 16px 16px 0 16px;
+      padding: 9px 13px;
+      max-width: 190px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.4;
+      box-shadow: var(--shadow-sm);
+      opacity: 0;
+      transform: scale(0.8) translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+    }
+
+    .petey-bubble.show {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    /* CSS Pigeon Character */
+    .petey-svg {
+      width: 64px;
+      height: 64px;
+      cursor: pointer;
+      animation: petey-bob 2.2s ease-in-out infinite;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    @keyframes petey-bob {
+      0%,100% { transform: translateY(0) rotate(-3deg); }
+      50%      { transform: translateY(-7px) rotate(3deg); }
+    }
+
+    /* ============================================================
+       COMPLETION SCREEN
+    ============================================================ */
+    .completion-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(10,20,40,0.82);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    .completion-screen.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .completion-card {
+      background: white;
+      border-radius: 32px;
+      padding: clamp(30px,6vw,52px) clamp(24px,5vw,48px);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: var(--shadow-lg);
+      transform: scale(0.5) rotate(-5deg);
+      transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1) 0.15s;
+    }
+
+    .completion-screen.show .completion-card { transform: scale(1) rotate(0deg); }
+
+    .completion-trophy { font-size: 4rem; display: block; margin-bottom: 12px; }
+
+    .completion-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.6rem, 6vw, 2.2rem);
+      color: var(--nyc-blue);
+      margin-bottom: 8px;
+    }
+
+    .completion-body {
+      color: #666;
+      margin-bottom: 22px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    /* ============================================================
+       CONFETTI
+    ============================================================ */
+    .confetti-stage {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 900;
+      overflow: hidden;
+    }
+
+    .cf {
+      position: absolute;
+      top: -20px;
+      font-size: 14px;
+      animation: cf-fall linear forwards;
+      will-change: transform;
+    }
+
+    @keyframes cf-fall {
+      from { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+      to   { transform: translateY(105vh) rotate(540deg) scale(0.4); opacity: 0; }
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: var(--nyc-blue);
+      color: rgba(255,255,255,0.75);
+      text-align: center;
+      padding: 20px 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    footer strong { color: var(--nyc-yellow); }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 480px) {
+      .tour-controls { gap: 8px; }
+      .btn { font-size: 0.82rem; padding: 8px 14px; }
+      .landmarks-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .modal-stats { flex-direction: column; gap: 8px; }
+      .petey-wrap { bottom: 12px; right: 12px; }
+      .petey-bubble { max-width: 155px; font-size: 0.73rem; }
+    }
+
+    @media (min-width: 768px) {
+      .landmarks-grid { grid-template-columns: repeat(4, 1fr); }
+      .tour-section { padding: 36px 28px 20px; }
+    }
+
+    /* Accessibility */
+    .landmark-pin:focus-visible .pin-icon {
+      outline: 4px solid #FFD700;
+      outline-offset: 3px;
+    }
+
+    .landmark-card:focus-visible {
+      outline: 3px solid var(--nyc-blue);
+      outline-offset: 3px;
+    }
+
+    /* Smooth scrollbar */
+    .modal::-webkit-scrollbar { width: 6px; }
+    .modal::-webkit-scrollbar-track { background: transparent; }
+    .modal::-webkit-scrollbar-thumb { background: #DDD; border-radius: 99px; }
+  </style>
+</head>
+<body>
+
+<!-- ================================================================
+  HEADER
+================================================================ -->
+<header class="site-header">
+  <div class="header-logo">
+    <span aria-hidden="true" style="font-size:1.5rem;">🗽</span>
+    <h1>NYC Cartoon Tour</h1>
+  </div>
+  <div class="header-right">
+    <span class="progress-label" id="progressLabel">0 of 8 visited</span>
+    <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0" id="progressBar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ================================================================
+  HERO SKYLINE
+================================================================ -->
+<section class="hero" aria-label="Animated New York City skyline">
+  <div class="sun" aria-hidden="true"></div>
+
+  <div class="cloud cloud-a" aria-hidden="true"></div>
+  <div class="cloud cloud-b" aria-hidden="true"></div>
+  <div class="cloud cloud-c" aria-hidden="true"></div>
+
+  <div class="birds-group" aria-hidden="true">
+    <div class="bird-shape"></div>
+    <div class="bird-shape"></div>
+    <div class="bird-shape"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-title">NYC Cartoon Tour!</div>
+    <div class="hero-badge">✨ 8 Legendary Landmarks to Discover ✨</div>
+  </div>
+
+  <div class="skyline" id="skyline" aria-hidden="true"></div>
+
+  <div class="hero-water" aria-hidden="true"></div>
+
+  <div class="taxi-wrap" aria-hidden="true">
+    <div class="taxi-roof"></div>
+    <div class="taxi-body">
+      <div class="taxi-stripe"></div>
+    </div>
+    <div class="taxi-wheels">
+      <div class="wheel"></div>
+      <div class="wheel"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+  MAIN TOUR SECTION
+================================================================ -->
+<main class="tour-section">
+  <h2 class="section-heading">Explore the Big Apple!</h2>
+  <p class="section-sub">Tap any pin on the map — or choose a landmark card below</p>
+
+  <div class="tour-controls">
+    <button class="btn btn-primary" id="startTourBtn" onclick="startGuidedTour()">
+      🗺️ Start Guided Tour
+    </button>
+    <button class="btn btn-outline" onclick="resetProgress()">
+      🔄 Reset
+    </button>
+    <div class="tour-badge" id="tourBadge">🎯 Tour Active</div>
+  </div>
+
+  <!-- INTERACTIVE MAP -->
+  <div class="map-wrapper" role="region" aria-label="Interactive NYC map">
+    <div class="map-canvas" id="mapCanvas">
+      <!-- SVG Map of NYC boroughs -->
+      <svg class="map-svg" viewBox="0 0 800 520" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <defs>
+          <pattern id="waveP" patternUnits="userSpaceOnUse" width="50" height="25">
+            <path d="M0 12 Q12.5 5,25 12 Q37.5 19,50 12" stroke="rgba(255,255,255,0.18)" fill="none" stroke-width="1.8"/>
+          </pattern>
+          <filter id="landShadow">
+            <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="rgba(0,0,0,0.18)"/>
+          </filter>
+        </defs>
+
+        <!-- Water -->
+        <rect width="800" height="520" fill="#3FC4DC"/>
+        <rect width="800" height="520" fill="url(#waveP)"/>
+
+        <!-- NJ background -->
+        <path d="M0,0 L160,0 L168,60 L162,150 L154,250 L148,360 L140,450 L134,520 L0,520 Z"
+              fill="#B6D6A0" stroke="#7AAA65" stroke-width="2"/>
+        <text x="72" y="260" font-family="Fredoka One,cursive" font-size="16" fill="#4E7A38"
+              text-anchor="middle" opacity="0.65" transform="rotate(-3,72,260)">NEW JERSEY</text>
+
+        <!-- Staten Island -->
+        <ellipse cx="188" cy="435" rx="78" ry="56"
+                 fill="#C6DC9E" stroke="#7AAA65" stroke-width="2" filter="url(#landShadow)"/>
+        <text x="188" y="440" font-family="Fredoka One,cursive" font-size="11"
+              fill="#4E7A38" text-anchor="middle">Staten Island</text>
+
+        <!-- The Bronx -->
+        <path d="M322,30 C342,28,368,33,384,47 L428,26 L488,15 L528,36 L540,82 L528,124
+                 L506,144 L472,152 L440,148 L416,132 L396,110 L388,88 L384,47
+                 C368,33,342,28,322,30 Z"
+              fill="#C8E4B4" stroke="#7AAA65" stroke-width="2" filter="url(#landShadow)"/>
+        <text x="455" y="98" font-family="Fredoka One,cursive" font-size="13"
+              fill="#4E7A38" text-anchor="middle" opacity="0.82">THE BRONX</text>
+
+        <!-- Queens -->
+        <path d="M388,88 C396,60,396,48,384,47 L428,26 L488,15 L560,36 L638,78 L665,142
+                 L655,205 L633,265 L602,315 L562,344 L522,354 L492,348 L462,332
+                 L432,308 L412,272 L396,240 L386,210 L384,174 L385,148 L388,120 Z"
+              fill="#C8E4B4" stroke="#7AAA65" stroke-width="2" filter="url(#landShadow)"/>
+        <text x="548" y="208" font-family="Fredoka One,cursive" font-size="14"
+              fill="#4E7A38" text-anchor="middle" opacity="0.82">QUEENS</text>
+
+        <!-- Manhattan island -->
+        <path d="M322,30 C344,26,370,30,388,46
+                 C400,60,398,92,394,124 C390,156,380,174,378,204
+                 C380,235,384,258,382,284 C380,310,372,326,372,350
+                 C370,370,368,390,362,406 C356,422,344,432,334,446
+                 C322,460,308,466,296,462 C282,458,270,444,267,428
+                 C262,408,267,390,270,372 C272,352,278,334,274,312
+                 C270,292,263,274,262,252 C260,232,264,212,263,192
+                 C260,170,253,152,252,128 C250,104,257,78,268,58
+                 C280,38,302,32,322,30 Z"
+              fill="#F5D76E" stroke="#C9A227" stroke-width="3" filter="url(#landShadow)"/>
+        <text x="320" y="258" font-family="Fredoka One,cursive" font-size="13"
+              fill="#9A7B10" text-anchor="middle" opacity="0.55">MANHATTAN</text>
+
+        <!-- Brooklyn -->
+        <path d="M296,462 C308,466,322,460,334,446
+                 C344,432,356,422,362,406 L402,394 L444,382
+                 L482,368 L522,354 L562,344 L602,360 L634,402
+                 L642,445 L625,485 L584,514 L522,520 L460,520
+                 L400,518 L348,508 L318,492 L298,476 Z"
+              fill="#FAD9A0" stroke="#C9A227" stroke-width="2" filter="url(#landShadow)"/>
+        <text x="480" y="456" font-family="Fredoka One,cursive" font-size="14"
+              fill="#9A7B10" text-anchor="middle" opacity="0.82">BROOKLYN</text>
+
+        <!-- Brooklyn Bridge graphic -->
+        <g opacity="0.75">
+          <!-- Road -->
+          <line x1="292" y1="458" x2="380" y2="398" stroke="#888" stroke-width="3.5"/>
+          <!-- Left tower -->
+          <rect x="288" y="440" width="9" height="32" fill="#7D6A50" rx="1"/>
+          <!-- Right tower -->
+          <rect x="376" y="380" width="9" height="32" fill="#7D6A50" rx="1"/>
+          <!-- Cables -->
+          <path d="M292,444 Q334,416,380,384" fill="none" stroke="#888" stroke-width="1.5" stroke-dasharray="3,3"/>
+          <path d="M292,456 Q334,428,380,396" fill="none" stroke="#888" stroke-width="1.5" stroke-dasharray="3,3"/>
+        </g>
+
+        <!-- Upper Bay label -->
+        <text x="218" y="348" font-family="Fredoka One,cursive" font-size="12"
+              fill="rgba(255,255,255,0.55)" text-anchor="middle"
+              transform="rotate(-22,218,348)">Upper Bay</text>
+
+        <!-- Atlantic Ocean label -->
+        <text x="700" y="490" font-family="Fredoka One,cursive" font-size="12"
+              fill="rgba(255,255,255,0.45)" text-anchor="middle">Atlantic</text>
+
+        <!-- Compass rose -->
+        <g transform="translate(740,66)">
+          <circle cx="0" cy="0" r="26" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+          <text x="0" y="-10" font-family="Fredoka One,cursive" font-size="12"
+                fill="rgba(255,255,255,0.7)" text-anchor="middle">N</text>
+          <text x="0" y="17" font-family="Fredoka One,cursive" font-size="9"
+                fill="rgba(255,255,255,0.45)" text-anchor="middle">S</text>
+          <text x="16" y="4" font-family="Fredoka One,cursive" font-size="9"
+                fill="rgba(255,255,255,0.45)" text-anchor="middle">E</text>
+          <text x="-16" y="4" font-family="Fredoka One,cursive" font-size="9"
+                fill="rgba(255,255,255,0.45)" text-anchor="middle">W</text>
+          <line x1="0" y1="-18" x2="0" y2="18" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>
+          <line x1="-18" y1="0" x2="18" y2="0" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>
+        </g>
+      </svg>
+
+      <!-- Landmark pins injected by JS -->
+    </div>
+
+    <!-- Map Legend -->
+    <div class="map-legend" id="mapLegend" aria-label="Map legend"></div>
+  </div>
+
+  <!-- LANDMARK CARDS -->
+  <h3 class="grid-title">All Landmarks</h3>
+  <div class="landmarks-grid" id="landmarksGrid"></div>
+
+</main>
+
+<!-- ================================================================
+  MODAL
+================================================================ -->
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalName">
+  <div class="modal" id="modal">
+    <div class="modal-header" id="modalHeader">
+      <div class="modal-visited-stamp" id="modalStamp">VISITED!</div>
+      <button class="modal-close-btn" onclick="closeModal()" aria-label="Close modal">&#x2715;</button>
+      <span class="modal-header-emoji" id="modalEmoji" aria-hidden="true"></span>
+      <div class="modal-name" id="modalName"></div>
+      <span class="modal-loc-tag" id="modalLoc"></span>
+    </div>
+    <div class="modal-body">
+      <div class="mascot-callout">
+        <span class="mascot-face" aria-hidden="true">🐦</span>
+        <p class="mascot-quote" id="modalMascotQuote"></p>
+      </div>
+      <p class="modal-desc" id="modalDesc"></p>
+      <div class="fun-fact-box">
+        <div class="fun-fact-head">⭐ Fun Fact!</div>
+        <div class="fun-fact-text" id="modalFunFact"></div>
+      </div>
+      <div class="modal-stats">
+        <div class="stat-pill">
+          <span class="stat-label">Year</span>
+          <span class="stat-value" id="modalYear"></span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-label">Borough</span>
+          <span class="stat-value" id="modalBoro"></span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-label">Status</span>
+          <span class="stat-value" id="modalStatus"></span>
+        </div>
+      </div>
+      <div class="modal-footer-btns">
+        <button class="btn btn-primary" id="modalNextBtn" onclick="nextStop()">Next Stop! →</button>
+        <button class="btn btn-outline" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+  FLOATING MASCOT — Petey the Pigeon
+================================================================ -->
+<div class="petey-wrap" id="peteyWrap">
+  <div class="petey-bubble" id="peteyBubble">
+    <span id="peteyText">Hey! I'm Petey! 🐦 Tap me for tips!</span>
+  </div>
+  <!-- SVG Pigeon -->
+  <svg class="petey-svg" viewBox="0 0 64 64" id="peteySvg"
+       onclick="peteyClick()" role="button" tabindex="0"
+       aria-label="Petey the Pigeon — click for tips"
+       onkeydown="if(event.key==='Enter'||event.key===' ')peteyClick()">
+    <!-- Body -->
+    <ellipse cx="32" cy="42" rx="18" ry="14" fill="#9B8DC4" stroke="#6B5A9C" stroke-width="1.5"/>
+    <!-- Belly -->
+    <ellipse cx="26" cy="44" rx="11" ry="10" fill="#D4C5E8"/>
+    <!-- Head -->
+    <circle cx="42" cy="28" r="11" fill="#7B6BA4" stroke="#5B4A7C" stroke-width="1.5"/>
+    <!-- Eye white -->
+    <circle cx="46" cy="25" r="4" fill="white"/>
+    <!-- Pupil -->
+    <circle cx="47" cy="25" r="2.2" fill="#222"/>
+    <!-- Eye shine -->
+    <circle cx="48" cy="24" r="0.9" fill="white"/>
+    <!-- Beak -->
+    <path d="M52,28 L58,30 L52,32 Z" fill="#FFA500" stroke="#CC7700" stroke-width="0.8"/>
+    <!-- Wing -->
+    <ellipse cx="22" cy="40" rx="10" ry="7" fill="#6B5A9C" stroke="#4A3A7A" stroke-width="1"
+             transform="rotate(-15,22,40)"/>
+    <!-- Tail -->
+    <path d="M14,46 L6,52 L16,50 L10,56 L20,50 Z" fill="#7B6BA4"/>
+    <!-- Left leg -->
+    <line x1="27" y1="55" x2="24" y2="62" stroke="#888" stroke-width="2" stroke-linecap="round"/>
+    <line x1="24" y1="62" x2="20" y2="63" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="24" y1="62" x2="24" y2="64" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="24" y1="62" x2="28" y2="64" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Right leg -->
+    <line x1="34" y1="55" x2="37" y2="62" stroke="#888" stroke-width="2" stroke-linecap="round"/>
+    <line x1="37" y1="62" x2="33" y2="63" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="37" y1="62" x2="37" y2="64" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="37" y1="62" x2="41" y2="63" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Iridescent neck patch -->
+    <ellipse cx="38" cy="35" rx="5" ry="4" fill="#5CD4C4" opacity="0.45"/>
+  </svg>
+</div>
+
+<!-- ================================================================
+  COMPLETION SCREEN
+================================================================ -->
+<div class="completion-screen" id="completionScreen">
+  <div class="completion-card">
+    <span class="completion-trophy">🏆</span>
+    <h2 class="completion-title">Tour Complete!</h2>
+    <p class="completion-body">
+      You've explored all 8 iconic NYC landmarks!<br>
+      Petey the Pigeon is impressed — you're a true New Yorker!
+    </p>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;font-size:1rem;"
+            onclick="closeCompletion()">
+      🎉 Woohoo! Let's Celebrate!
+    </button>
+  </div>
+</div>
+
+<!-- Confetti stage -->
+<div class="confetti-stage" id="confettiStage" aria-hidden="true"></div>
+
+<!-- ================================================================
+  FOOTER
+================================================================ -->
+<footer>
+  <p>🗽 <strong>NYC Cartoon Tour</strong> &bull; Explore the Big Apple with Petey the Pigeon! 🐦</p>
+  <p style="margin-top:6px;opacity:0.55">Made with ❤️ and lots of 🍕 pizza in New York City</p>
+</footer>
+
+<!-- ================================================================
+  JAVASCRIPT
+================================================================ -->
+<script>
+/* ---------------------------------------------------------------
+   LANDMARK DATA
+--------------------------------------------------------------- */
+const LANDMARKS = [
+  {
+    id: 'liberty',
+    name: 'Statue of Liberty',
+    emoji: '🗽',
+    color: '#4A8C45',
+    mapX: 24,   // % left on map canvas
+    mapY: 68,   // % top on map canvas (pin tip lands here)
+    borough: 'Harbor',
+    boroughShort: 'Harbor',
+    year: 1886,
+    desc: 'A towering symbol of freedom and democracy, the Statue of Liberty stands on Liberty Island in New York Harbor. This stunning copper sculpture was a gift from France to the United States, and greets millions of visitors each year with her raised torch.',
+    funFact: "Lady Liberty's index finger alone is 8 feet long — and her shoe size would be a whopping 879!",
+    mascotSays: "I fly past Lady Liberty every single morning! She's been holding that torch since 1886. My wing gets tired just thinking about it! Truly my hero. 🗽"
+  },
+  {
+    id: 'empire',
+    name: 'Empire State Building',
+    emoji: '🏙️',
+    color: '#C62828',
+    mapX: 37,
+    mapY: 41,
+    borough: 'Manhattan',
+    boroughShort: 'Manhattan',
+    year: 1931,
+    desc: "One of the most iconic skyscrapers in the world, this magnificent Art Deco masterpiece soars 102 stories above Midtown Manhattan. For 40 years it held the title of the world's tallest building and continues to define the NYC skyline.",
+    funFact: "The Empire State Building was built in just 410 days — the construction crew added an average of 4.5 floors every single day!",
+    mascotSays: "I roost on the very tip-top of this beauty! The view is incredible — on a clear day you can see 80 miles! Though the wind ruffles my feathers something fierce... 🌬️"
+  },
+  {
+    id: 'bridge',
+    name: 'Brooklyn Bridge',
+    emoji: '🌉',
+    color: '#7B5E45',
+    mapX: 43,
+    mapY: 80,
+    borough: 'Manhattan / Brooklyn',
+    boroughShort: 'Bklyn/Mnhtn',
+    year: 1883,
+    desc: "A marvel of 19th-century engineering, the Brooklyn Bridge spans the East River connecting Manhattan and Brooklyn. Its elegant Gothic stone towers and sweeping steel cables make it one of the most photographed structures on Earth.",
+    funFact: "When it opened, PT Barnum paraded 21 elephants across the Brooklyn Bridge to prove it was structurally sound. It worked — nobody questioned it after that!",
+    mascotSays: "The bridge is one of my favorite runways for takeoff! I love the updrafts between the cables. The views of both Manhattan skylines are absolutely chef's kiss! 😙"
+  },
+  {
+    id: 'timessq',
+    name: 'Times Square',
+    emoji: '✨',
+    color: '#D84315',
+    mapX: 34,
+    mapY: 33,
+    borough: 'Manhattan',
+    boroughShort: 'Manhattan',
+    year: 1904,
+    desc: "The dazzling 'Crossroads of the World' blazes with neon lights, massive LED billboards, and an electric energy unlike anywhere else on the planet. Every New Year's Eve the world watches the glittering ball drop here at midnight.",
+    funFact: "Times Square has over 300 LED screens and more than 50 Broadway theaters. On New Year's Eve up to 100,000 people pack in — and I definitely stay home that night!",
+    mascotSays: "I always get dizzy here from all the flashing lights! But I LOVE snatching a soft pretzel from a street cart and watching tourists stop in the middle of the sidewalk. Classic! 🥨"
+  },
+  {
+    id: 'centralpark',
+    name: 'Central Park',
+    emoji: '🌿',
+    color: '#2E7D32',
+    mapX: 32,
+    mapY: 20,
+    borough: 'Manhattan',
+    boroughShort: 'Manhattan',
+    year: 1858,
+    desc: "An 843-acre green oasis right in the heart of Manhattan, Central Park is a magical escape from the city's relentless energy. With meadows, lakes, a zoo, ice rinks, and 58 miles of paths, it's one of the most visited urban parks in the world.",
+    funFact: "Central Park has appeared in over 350 movies and TV shows. The park also has more trees than the entire island of Manhattan has buildings!",
+    mascotSays: "This is MY turf! The best birdseed in all five boroughs is right here. Also I have roughly 200 cousins who live in the park. Family reunions are quite the event. 🌳"
+  },
+  {
+    id: 'wtc',
+    name: 'One World Trade Center',
+    emoji: '🌆',
+    color: '#1565C0',
+    mapX: 33,
+    mapY: 76,
+    borough: 'Manhattan',
+    boroughShort: 'Manhattan',
+    year: 2014,
+    desc: "The tallest building in the Western Hemisphere, One World Trade Center rises exactly 1,776 feet above Lower Manhattan as a powerful testament to resilience and the enduring American spirit. Its glass exterior reflects the sky in a constantly shifting display.",
+    funFact: "One World Trade Center stands exactly 1,776 feet tall — a deliberate tribute to the year the United States declared independence from Britain.",
+    mascotSays: "1,776 feet tall — I feel very patriotic every time I fly by! The observation deck at 102 floors is breathtaking. Though personally I prefer to swoop around the outside for free. 🇺🇸"
+  },
+  {
+    id: 'grandcentral',
+    name: 'Grand Central Terminal',
+    emoji: '🚂',
+    color: '#6A1B9A',
+    mapX: 42,
+    mapY: 37,
+    borough: 'Manhattan',
+    boroughShort: 'Manhattan',
+    year: 1913,
+    desc: "One of the world's most magnificent train stations, Grand Central Terminal's stunning Beaux-Arts architecture stops visitors in their tracks. The soaring main concourse features an iconic celestial ceiling painted with glowing constellations — look up!",
+    funFact: "Grand Central has 44 platforms on 2 underground levels — more than any other train station in the world. There's also a secret presidential platform under the Waldorf Astoria!",
+    mascotSays: "750,000 people pass through here EVERY DAY. That is an absolutely ridiculous amount of dropped croissant crumbs. I eat very well on my morning commute through here. 🥐"
+  },
+  {
+    id: 'coney',
+    name: 'Coney Island',
+    emoji: '🎡',
+    color: '#AD1457',
+    mapX: 63,
+    mapY: 92,
+    borough: 'Brooklyn',
+    boroughShort: 'Brooklyn',
+    year: 1903,
+    desc: "A legendary seaside amusement destination on the southern tip of Brooklyn, Coney Island has been dazzling visitors for over a century. The iconic Wonder Wheel, the thunderous Cyclone roller coaster, and Nathan's Famous hot dogs have been crowd favorites for generations.",
+    funFact: "Nathan's Famous hot dog stand on Coney Island has been serving since 1916 — and hosts an annual hot dog eating contest every 4th of July where competitors eat 70+ hot dogs!",
+    mascotSays: "Cotton candy, hot dogs, roller coasters — Coney Island is my absolute FAVORITE destination! Though I once tried to perch on the Cyclone mid-ride. I don't recommend it. 🎢"
+  }
+];
+
+/* ---------------------------------------------------------------
+   STATE
+--------------------------------------------------------------- */
+let visited = new Set();
+let tourMode = false;
+let tourQueue = [];   // IDs in tour order
+let currentId = null;
+
+/* ---------------------------------------------------------------
+   PETEY TIPS
+--------------------------------------------------------------- */
+const PETEY_TIPS = [
+  "Tap any glowing pin on the map to explore that landmark!",
+  "Press 'Start Guided Tour' and I'll take you to all 8 stops!",
+  "Don't miss Coney Island way down in Brooklyn — great hot dogs!",
+  "Central Park is my home turf — 843 ACRES of my territory!",
+  "The Brooklyn Bridge was built in 1883 and is still going strong!",
+  "One World Trade Center is exactly 1,776 feet tall. Pretty symbolic, right?",
+  "Grand Central has a SECRET presidential railway platform. Fancy!",
+  "Fun fact: I once stole a tourist's hot pretzel near Times Square. Worth it. 🥨"
+];
+let peteyTipIdx = 0;
+let peteyTimer = null;
+
+/* ---------------------------------------------------------------
+   INIT
+--------------------------------------------------------------- */
+function init() {
+  const saved = localStorage.getItem('nycTourV2');
+  if (saved) {
+    try { visited = new Set(JSON.parse(saved)); } catch(e) {}
+  }
+
+  buildSkyline();
+  renderPins();
+  renderCards();
+  renderLegend();
+  updateProgress();
+
+  // Show Petey greeting after delay
+  setTimeout(() => showPeteyTip("Hey! I'm Petey! 🐦 Tap any landmark pin to explore NYC with me!"), 1800);
+}
+
+/* ---------------------------------------------------------------
+   SKYLINE BUILDER
+--------------------------------------------------------------- */
+function buildSkyline() {
+  const sky = document.getElementById('skyline');
+
+  // [width, height, colorIndex, hasAntenna, antennaH]
+  const bldgs = [
+    [32,68,0,false], [44,108,1,false], [28,55,0,false],
+    [52,148,2,true,30], [24,78,1,false], [58,125,0,false],
+    [34,88,2,false], [50,158,2,true,38], [28,68,0,false],
+    [62,142,1,false], [30,72,2,false], [48,118,0,false],
+    [36,82,1,true,22], [68,162,2,true,42], [22,58,0,false],
+    [44,105,1,false], [54,138,2,false], [28,65,0,false],
+    [58,178,2,true,40], [32,80,1,false], [48,122,0,false],
+    [26,54,2,false], [62,148,1,true,28], [38,86,0,false]
+  ];
+
+  const colors = ['#1A252F','#2C3E50','#34495E'];
+
+  bldgs.forEach(([w, h, ci, antenna, aH]) => {
+    const b = document.createElement('div');
+    b.className = 'bldg';
+    b.style.cssText = `width:${w}px;height:${h}px;background:${colors[ci]};`;
+
+    const wins = document.createElement('div');
+    wins.className = 'bldg-windows';
+    b.appendChild(wins);
+
+    if (antenna) {
+      const ant = document.createElement('div');
+      ant.style.cssText = `position:absolute;top:${-(aH||24)}px;left:50%;
+        transform:translateX(-50%);width:3px;height:${aH||24}px;background:#555;`;
+      b.appendChild(ant);
+    }
+
+    sky.appendChild(b);
+  });
+}
+
+/* ---------------------------------------------------------------
+   RENDER MAP PINS
+--------------------------------------------------------------- */
+function renderPins() {
+  const canvas = document.getElementById('mapCanvas');
+  canvas.querySelectorAll('.landmark-pin').forEach(el => el.remove());
+
+  LANDMARKS.forEach(lm => {
+    const pin = document.createElement('div');
+    pin.className = `landmark-pin${visited.has(lm.id) ? ' visited' : ''}`;
+    pin.style.cssText = `left:${lm.mapX}%;top:${lm.mapY}%;`;
+    pin.setAttribute('data-id', lm.id);
+    pin.setAttribute('role', 'button');
+    pin.setAttribute('tabindex', '0');
+    pin.setAttribute('aria-label', `${lm.name} — tap to explore`);
+
+    pin.innerHTML = `
+      <div class="pin-icon" style="background:${lm.color}">
+        <span class="pin-inner">${lm.emoji}</span>
+      </div>
+      <div class="pin-check" aria-hidden="true">✓</div>
+      <div class="pin-tooltip">${lm.name}</div>
+    `;
+
+    pin.addEventListener('click', () => openModal(lm.id));
+    pin.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(lm.id); }
+    });
+
+    canvas.appendChild(pin);
+  });
+}
+
+/* ---------------------------------------------------------------
+   RENDER LANDMARK CARDS
+--------------------------------------------------------------- */
+function renderCards() {
+  const grid = document.getElementById('landmarksGrid');
+  grid.innerHTML = '';
+  LANDMARKS.forEach(lm => {
+    const card = document.createElement('div');
+    card.className = `landmark-card${visited.has(lm.id) ? ' visited' : ''}`;
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', `${lm.name} — click to explore`);
+    card.innerHTML = `
+      <div class="card-stamp" aria-hidden="true">✓ Visited!</div>
+      <span class="card-emoji">${lm.emoji}</span>
+      <div class="card-name">${lm.name}</div>
+      <div class="card-borough">${lm.borough}</div>
+    `;
+    card.addEventListener('click', () => openModal(lm.id));
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(lm.id); }
+    });
+    grid.appendChild(card);
+  });
+}
+
+/* ---------------------------------------------------------------
+   RENDER LEGEND
+--------------------------------------------------------------- */
+function renderLegend() {
+  const legend = document.getElementById('mapLegend');
+  legend.innerHTML = LANDMARKS.map(lm => `
+    <div class="legend-item${visited.has(lm.id) ? ' visited-item' : ''}">
+      <div class="legend-dot" style="background:${lm.color}"></div>
+      <span>${lm.emoji} ${lm.name}</span>
+    </div>
+  `).join('');
+}
+
+/* ---------------------------------------------------------------
+   OPEN / CLOSE MODAL
+--------------------------------------------------------------- */
+function openModal(id) {
+  const lm = LANDMARKS.find(l => l.id === id);
+  if (!lm) return;
+  currentId = id;
+
+  // Populate fields
+  document.getElementById('modalEmoji').textContent = lm.emoji;
+  document.getElementById('modalName').textContent = lm.name;
+  document.getElementById('modalLoc').textContent = `📍 ${lm.borough}`;
+  document.getElementById('modalDesc').textContent = lm.desc;
+  document.getElementById('modalFunFact').textContent = lm.funFact;
+  document.getElementById('modalYear').textContent = lm.year;
+  document.getElementById('modalBoro').textContent = lm.boroughShort;
+  document.getElementById('modalMascotQuote').textContent = lm.mascotSays;
+
+  const isVisited = visited.has(id);
+  document.getElementById('modalStatus').textContent = isVisited ? '✓ Visited!' : '—';
+  const stamp = document.getElementById('modalStamp');
+  stamp.classList.toggle('show', isVisited);
+
+  // Header color
+  document.getElementById('modalHeader').style.background =
+    `linear-gradient(135deg, ${lm.color}, ${adjustColor(lm.color, -25)})`;
+
+  // Tour next button
+  const nextBtn = document.getElementById('modalNextBtn');
+  if (tourMode && tourQueue.length > 0) {
+    const remaining = tourQueue.filter(i => !visited.has(i) && i !== id);
+    nextBtn.textContent = remaining.length > 0 ? 'Next Stop! →' : '🏆 Finish Tour!';
+    nextBtn.style.display = '';
+  } else {
+    nextBtn.style.display = 'none';
+  }
+
+  // Show overlay
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  // Mark visited
+  markVisited(id);
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  currentId = null;
+}
+
+/* ---------------------------------------------------------------
+   MARK VISITED
+--------------------------------------------------------------- */
+function markVisited(id) {
+  if (!visited.has(id)) {
+    visited.add(id);
+    saveProgress();
+    updateProgress();
+    renderPins();
+    renderCards();
+    renderLegend();
+
+    // Update stamp in open modal
+    document.getElementById('modalStatus').textContent = '✓ Visited!';
+    document.getElementById('modalStamp').classList.add('show');
+
+    showPeteyTip(`Great choice! ${LANDMARKS.find(l=>l.id===id)?.name} is so cool! 🌟`);
+
+    if (visited.size === LANDMARKS.length) {
+      setTimeout(() => { closeModal(); showCompletion(); }, 900);
+    }
+  }
+}
+
+/* ---------------------------------------------------------------
+   GUIDED TOUR
+--------------------------------------------------------------- */
+function startGuidedTour() {
+  tourMode = true;
+  tourQueue = LANDMARKS.map(l => l.id);
+  document.getElementById('tourBadge').classList.add('active');
+  document.getElementById('startTourBtn').textContent = '🗺️ Tour Active';
+
+  // Start at first unvisited
+  const first = tourQueue.find(id => !visited.has(id)) || tourQueue[0];
+  openModal(first);
+  showPeteyTip("Guided tour started! I'll take you to all 8 landmarks! 🗺️");
+}
+
+function nextStop() {
+  const remaining = tourQueue.filter(id => !visited.has(id) && id !== currentId);
+  closeModal();
+  if (remaining.length > 0) {
+    setTimeout(() => openModal(remaining[0]), 380);
+  } else {
+    tourMode = false;
+    document.getElementById('tourBadge').classList.remove('active');
+    document.getElementById('startTourBtn').textContent = '🗺️ Start Guided Tour';
+    showPeteyTip("Tour complete! You've seen everything! 🎉");
+  }
+}
+
+/* ---------------------------------------------------------------
+   PROGRESS
+--------------------------------------------------------------- */
+function updateProgress() {
+  const n = visited.size;
+  const total = LANDMARKS.length;
+  const pct = (n / total) * 100;
+  document.getElementById('progressLabel').textContent = `${n} of ${total} visited`;
+  document.getElementById('progressFill').style.width = `${pct}%`;
+  const bar = document.getElementById('progressBar');
+  bar.setAttribute('aria-valuenow', n);
+}
+
+function saveProgress() {
+  localStorage.setItem('nycTourV2', JSON.stringify([...visited]));
+}
+
+function resetProgress() {
+  if (!confirm('Reset all tour progress and start fresh?')) return;
+  visited.clear();
+  localStorage.removeItem('nycTourV2');
+  tourMode = false;
+  tourQueue = [];
+  document.getElementById('tourBadge').classList.remove('active');
+  document.getElementById('startTourBtn').textContent = '🗺️ Start Guided Tour';
+  updateProgress();
+  renderPins();
+  renderCards();
+  renderLegend();
+  showPeteyTip("Tour reset! The Big Apple awaits — let's explore! 🗽");
+}
+
+/* ---------------------------------------------------------------
+   PETEY THE PIGEON
+--------------------------------------------------------------- */
+function showPeteyTip(text) {
+  clearTimeout(peteyTimer);
+  const bubble = document.getElementById('peteyBubble');
+  document.getElementById('peteyText').textContent = text;
+  bubble.classList.add('show');
+  peteyTimer = setTimeout(() => bubble.classList.remove('show'), 5500);
+}
+
+function peteyClick() {
+  const bubble = document.getElementById('peteyBubble');
+  if (bubble.classList.contains('show')) {
+    bubble.classList.remove('show');
+    clearTimeout(peteyTimer);
+  } else {
+    peteyTipIdx = (peteyTipIdx + 1) % PETEY_TIPS.length;
+    showPeteyTip(PETEY_TIPS[peteyTipIdx]);
+  }
+}
+
+/* ---------------------------------------------------------------
+   COMPLETION & CONFETTI
+--------------------------------------------------------------- */
+function showCompletion() {
+  document.getElementById('completionScreen').classList.add('show');
+  launchConfetti();
+  showPeteyTip("AMAZING! You're officially a NYC expert! 🏆🗽");
+}
+
+function closeCompletion() {
+  document.getElementById('completionScreen').classList.remove('show');
+  launchConfetti();
+}
+
+function launchConfetti() {
+  const stage = document.getElementById('confettiStage');
+  const colors = ['#FFD700','#E53935','#1565C0','#4CAF50','#FF6B6B','#4ECDC4','#FF9800','#E91E63'];
+  const chars  = ['●','▲','■','★','♥','◆','⬟'];
+
+  for (let i = 0; i < 90; i++) {
+    setTimeout(() => {
+      const p = document.createElement('div');
+      p.className = 'cf';
+      p.textContent = chars[Math.floor(Math.random() * chars.length)];
+      p.style.cssText = `
+        left:${Math.random() * 100}vw;
+        color:${colors[Math.floor(Math.random() * colors.length)]};
+        font-size:${9 + Math.random() * 14}px;
+        animation-duration:${2.2 + Math.random() * 2}s;
+        animation-delay:${Math.random() * 0.4}s;
+      `;
+      stage.appendChild(p);
+      setTimeout(() => p.remove(), 5000);
+    }, i * 25);
+  }
+}
+
+/* ---------------------------------------------------------------
+   UTILITIES
+--------------------------------------------------------------- */
+// Lighten/darken a hex color
+function adjustColor(hex, amount) {
+  let r = parseInt(hex.slice(1,3),16);
+  let g = parseInt(hex.slice(3,5),16);
+  let b = parseInt(hex.slice(5,7),16);
+  r = Math.max(0, Math.min(255, r + amount));
+  g = Math.max(0, Math.min(255, g + amount));
+  b = Math.max(0, Math.min(255, b + amount));
+  return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
+}
+
+/* ---------------------------------------------------------------
+   EVENT LISTENERS
+--------------------------------------------------------------- */
+// Close modal on backdrop click
+document.getElementById('modalOverlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeModal();
+});
+
+// Escape key to close modal
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
+// Swipe down on modal to close (mobile)
+let touchStartY = 0;
+document.getElementById('modal').addEventListener('touchstart', e => {
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+document.getElementById('modal').addEventListener('touchend', e => {
+  if (e.changedTouches[0].clientY - touchStartY > 75) closeModal();
+}, { passive: true });
+
+/* ---------------------------------------------------------------
+   BOOT
+--------------------------------------------------------------- */
+init();
+</script>
+</body>
+</html>
